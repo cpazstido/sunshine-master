@@ -1,0 +1,15 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: sunshine-provider-uac
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+security:
+  oauth2:
+    resource:
+      filter-order: 3
+      id: sunshine-resouce-uac

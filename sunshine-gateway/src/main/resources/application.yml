@@ -1,0 +1,32 @@
+server:
+  port: 9000
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+spring:
+  application:
+    name: @pom.artifactId@
+
+
+zuul:
+  routes:
+    uac-route:
+      path: /uac/**
+      sensitiveHeaders:
+      service-id: sunshine-provider-uac
+    omc-route:
+      path: /omc/**
+      service-id: sunshine-provider-omc
+    pmc-route:
+      path: /pmc/**
+      service-id: sunshine-provider-pmc
+security:
+  oauth2:
+    client:
+      clientId: admin
+      clientSecret: 123456
+      access-token-uri: http://localhost:9000/uac/oauth/token
+      user-authorization-uri: http://localhost:9000/uac/oauth/authorize
+    resource:
+      user-info-uri: http://localhost:9000/uac/user

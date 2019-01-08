@@ -1,0 +1,29 @@
+server:
+  port: 9002
+spring:
+  application:
+    name: sunshine-provider-omc
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+security:
+  oauth2:
+    client:
+      clientId: admin
+      clientSecret: 123456
+      access-token-uri: http://localhost:9000/uac/oauth/token
+      user-authorization-uri: http://localhost:9000/uac/oauth/authorize
+    resource:
+      user-info-uri: http://localhost:9000/uac/user
+sunshine:
+  oauth2:
+    client:
+      id: sunshine-resouce-uac
+      accessTokenUrl: http://localhost:9000/uac/oauth/token
+      clientId: admin
+      clientSecret: 123456
+      clientAuthenticationScheme: header
+      scope: select
+    resource:
+      user-info-uri: http://localhost:9000/uac/user
