@@ -60,8 +60,9 @@ public class AuthHeaderFilter extends ZuulFilter {
 	 */
 	@Override
 	public Object run() {
-		log.info("AuthHeaderFilter - 开始鉴权...");
 		RequestContext requestContext = RequestContext.getCurrentContext();
+        String requestURI = requestContext.getRequest().getRequestURI();
+        log.info("AuthHeaderFilter - 开始鉴权..."+requestURI);
 		try {
 			doSomething(requestContext);
 		} catch (Exception e) {

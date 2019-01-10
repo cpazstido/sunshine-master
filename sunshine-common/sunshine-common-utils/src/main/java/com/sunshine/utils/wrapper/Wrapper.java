@@ -26,10 +26,20 @@ public class Wrapper<T> implements Serializable {
 	 */
 	public static final String SUCCESS_MESSAGE = "操作成功";
 
+    /**
+     * 未授权信息.
+     */
+    public static final String UNAUTHORIZED_MESSAGE = "请登录";
+
 	/**
 	 * 错误码.
 	 */
 	public static final int ERROR_CODE = 500;
+
+    /**
+     * 未授权
+     */
+	public static final int UNAUTHORIZED_CODE = 401;
 
 	/**
 	 * 错误信息.

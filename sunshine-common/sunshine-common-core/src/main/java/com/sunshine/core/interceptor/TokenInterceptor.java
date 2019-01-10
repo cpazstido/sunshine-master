@@ -1,8 +1,10 @@
 package com.sunshine.core.interceptor;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sunshine.base.dto.LoginAuthDto;
 import com.sunshine.base.dto.UserTokenDto;
 import com.sunshine.utils.RedisKeyUtil;
+import com.sunshine.utils.wrapper.WrapMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -19,6 +21,15 @@ import java.io.IOException;
 public class TokenInterceptor implements HandlerInterceptor {
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
+    @Resource
+    private ObjectMapper objectMapper;
+
+    private static final String USER = "/user";
+    private static final String OPTIONS = "OPTIONS";
+    private static final String AUTH_PATH1 = "/auth";
+    private static final String AUTH_PATH2 = "/oauth";
+    private static final String AUTH_PATH3 = "/error";
+    private static final String AUTH_PATH4 = "/api";
 
     /**
      * After completion.
@@ -60,13 +71,21 @@ public class TokenInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String uri = request.getRequestURI();
-        log.info(uri);
+        log.info("<== preHandle - 权限拦截器.  url={}", uri);
+        if (uri.contains(USER) || uri.contains(AUTH_PATH1) || uri.contains(AUTH_PATH2) || uri.contains(AUTH_PATH3) || uri.contains(AUTH_PATH4)) {
+            log.info("<== preHandle - 配置URL不走认证.  url={}", uri);
+            return true;
+        }
         String token = StringUtils.substringAfter(request.getHeader(HttpHeaders.AUTHORIZATION), "Bearer ");
+        if(StringUtils.isEmpty(token)){
+            token = request.getParameter("access_token");
+        }
         log.info("<== preHandle - 权限拦截器.  token={}", token);
         LoginAuthDto loginUser = (LoginAuthDto) redisTemplate.opsForValue().get(RedisKeyUtil.getAccessTokenKey(token));
         if (loginUser == null) {
             log.error("获取用户信息失败, 不允许操作");
-            response.sendError(HttpServletResponse.SC_FORBIDDEN,"请登录");
+            response.setContentType("application/json;charset=UTF-8");
+            response.getWriter().write((objectMapper.writeValueAsString(WrapMapper.unAuthorized("无效token:"+token))));
             return false;
         }
         return true;

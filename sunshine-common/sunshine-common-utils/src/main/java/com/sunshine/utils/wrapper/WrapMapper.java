@@ -130,4 +130,8 @@ public class WrapMapper {
 	public static <E> Wrapper<E> ok(E o) {
 		return new Wrapper<>(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, o);
 	}
+
+	public static <E> Wrapper<E> unAuthorized(E o) {
+		return new Wrapper<>(Wrapper.UNAUTHORIZED_CODE, Wrapper.UNAUTHORIZED_MESSAGE, o);
+	}
 }

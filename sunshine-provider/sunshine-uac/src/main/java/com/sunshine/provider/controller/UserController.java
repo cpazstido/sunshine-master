@@ -1,12 +1,19 @@
 package com.sunshine.provider.controller;
 
 import com.sunshine.provider.model.SecurityUser;
+import com.sunshine.utils.RedisKeyUtil;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+
 @RestController
 public class UserController {
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
+
     /**
      * 用户信息校验
      * @param authentication 信息
@@ -16,5 +23,10 @@ public class UserController {
     public Object user(Authentication authentication) {
         SecurityUser sysUser = new SecurityUser(1L,"admin","","",1L,"");
         return sysUser;
+    }
+
+    @RequestMapping("/logout")
+    public void logout(String accessToken){
+        redisTemplate.delete(RedisKeyUtil.getAccessTokenKey(accessToken));
     }
 }
