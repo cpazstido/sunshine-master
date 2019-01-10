@@ -1,6 +1,7 @@
 package com.sunshine.provider.config;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -22,30 +25,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         manager.createUser(User.withUsername("admin").password(finalPassword).authorities("admin").build());
         return manager;
     }
-//    @Bean
-//    @Override
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        AuthenticationManager manager = super.authenticationManagerBean();
-//        return manager;
-//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .formLogin()
-//                .and()
-//                .authorizeRequests()
-//                .antMatchers("/oauth/**").permitAll()
-//                .anyRequest().authenticated()
-//        ;
-//
         http
                 .requestMatchers().anyRequest()
                 .and()
                 .authorizeRequests()
                 .antMatchers("/oauth/**").permitAll()
-
-//                .anyRequest().authenticated()
         ;
     }
 }
