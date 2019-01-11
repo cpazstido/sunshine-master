@@ -42,14 +42,14 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 	private ClientDetailsService clientDetailsService;
 	@Resource
 	private AuthorizationServerTokenServices authorizationServerTokenServices;
-    @Resource
-    private RedisTemplate<String, Object> redisTemplate;
+	@Resource
+	private RedisTemplate<String, Object> redisTemplate;
 
 	private static final String BEARER_TOKEN_TYPE = "Basic ";
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-	                                    Authentication authentication) throws IOException, ServletException {
+										Authentication authentication) throws IOException, ServletException {
 
 		logger.info("登录成功");
 
@@ -82,10 +82,10 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 		OAuth2AccessToken token = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
 		User principal = (User) authentication.getPrincipal();
 
-        LoginAuthDto loginAuthDto = new LoginAuthDto();
-        loginAuthDto.setLoginName(principal.getUsername());
+		LoginAuthDto loginAuthDto = new LoginAuthDto();
+		loginAuthDto.setLoginName(principal.getUsername());
 
-		redisTemplate.opsForValue().set(RedisKeyUtil.getAccessTokenKey(token.getValue()).toLowerCase(), loginAuthDto, 7200, TimeUnit.SECONDS);
+//		redisTemplate.opsForValue().set(RedisKeyUtil.getAccessTokenKey(token.getValue()), loginAuthDto, 7200, TimeUnit.SECONDS);
 		log.info("用户【 {} 】记录登录日志", principal.getUsername());
 
 		response.setContentType("application/json;charset=UTF-8");

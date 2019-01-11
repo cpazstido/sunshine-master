@@ -61,7 +61,7 @@ public class OAuth2FeignAutoConfiguration {
 	 */
 	@Bean("sunshineOAuth2RestTemplate")
 	public OAuth2RestTemplate oAuth2RestTemplate() {
-        DefaultOAuth2ClientContext oAuth2ClientContext = new MyDefaultOAuth2ClientContext(redisTemplate);
+        DefaultOAuth2ClientContext oAuth2ClientContext = new DefaultOAuth2ClientContext();
 		final OAuth2RestTemplate oAuth2RestTemplate = new OAuth2RestTemplate(resourceDetails(), oAuth2ClientContext);
 		oAuth2RestTemplate.setRequestFactory(new Netty4ClientHttpRequestFactory());
 
