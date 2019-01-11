@@ -1,14 +1,16 @@
 package com.sunshine.core.interceptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sunshine.base.dto.LoginAuthDto;
-import com.sunshine.base.dto.UserTokenDto;
-import com.sunshine.utils.RedisKeyUtil;
 import com.sunshine.utils.wrapper.WrapMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,9 +22,9 @@ import java.io.IOException;
 @Slf4j
 public class TokenInterceptor implements HandlerInterceptor {
     @Resource
-    private RedisTemplate<String, Object> redisTemplate;
-    @Resource
     private ObjectMapper objectMapper;
+    @Autowired
+    RedisConnectionFactory redisConnectionFactory;
 
     private static final String USER = "/user";
     private static final String OPTIONS = "OPTIONS";
@@ -76,13 +78,14 @@ public class TokenInterceptor implements HandlerInterceptor {
             log.info("<== preHandle - 配置URL不走认证.  url={}", uri);
             return true;
         }
-        String token = StringUtils.substringAfter(request.getHeader(HttpHeaders.AUTHORIZATION), "Bearer ");
+        String token = StringUtils.substringAfter(request.getHeader(HttpHeaders.AUTHORIZATION).toLowerCase(), "bearer ");
         if(StringUtils.isEmpty(token)){
             token = request.getParameter("access_token");
         }
         log.info("<== preHandle - 权限拦截器.  token={}", token);
-        LoginAuthDto loginUser = (LoginAuthDto) redisTemplate.opsForValue().get(RedisKeyUtil.getAccessTokenKey(token));
-        if (loginUser == null) {
+        RedisTokenStore tokenStore = new RedisTokenStore(redisConnectionFactory);
+        OAuth2AccessToken auth2AccessToken = tokenStore.readAccessToken(token);
+        if (auth2AccessToken == null) {
             log.error("获取用户信息失败, 不允许操作");
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write((objectMapper.writeValueAsString(WrapMapper.unAuthorized("无效token:"+token))));

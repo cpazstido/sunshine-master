@@ -12,6 +12,10 @@
     <artifactId>sunshine-uac</artifactId>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.life.sunshine</groupId>
+            <artifactId>sunshine-common-core</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>

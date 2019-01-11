@@ -4,7 +4,7 @@ spring:
   application:
     name: sunshine-provider-omc
   redis:
-    host: 127.0.0.1
+    host: 127.0.0.2
 eureka:
   client:
     service-url:
