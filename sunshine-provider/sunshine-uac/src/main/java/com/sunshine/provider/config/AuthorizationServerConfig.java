@@ -12,14 +12,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.TokenEnhancer;
-import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Configuration
 @EnableAuthorizationServer
@@ -30,13 +24,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     UserDetailsService userDetailsService;
     @Autowired
     RedisConnectionFactory redisConnectionFactory;
-    @Autowired(required = false)
-    private JwtAccessTokenConverter jwtAccessTokenConverter;
-
-    @Autowired(required = false)
-    private TokenEnhancer jwtTokenEnhancer;
-    @Autowired
-    private TokenStore tokenStore;
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
@@ -59,21 +46,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        RedisTokenStore tokenStore = new RedisTokenStore(redisConnectionFactory);
         endpoints
                 .tokenStore(tokenStore)
                 .userDetailsService(userDetailsService)
                 .authenticationManager(authenticationManager)
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
         ;
-
-        if (jwtAccessTokenConverter != null && jwtTokenEnhancer != null) {
-            TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
-            List<TokenEnhancer> enhancers = new ArrayList<>();
-            enhancers.add(jwtTokenEnhancer);
-            enhancers.add(jwtAccessTokenConverter);
-            enhancerChain.setTokenEnhancers(enhancers);
-            endpoints.tokenEnhancer(enhancerChain).accessTokenConverter(jwtAccessTokenConverter);
-        }
 
         endpoints.reuseRefreshTokens(true);
     }
