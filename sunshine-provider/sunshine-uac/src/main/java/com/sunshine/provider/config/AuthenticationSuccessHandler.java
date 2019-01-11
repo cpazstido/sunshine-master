@@ -85,7 +85,7 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
         LoginAuthDto loginAuthDto = new LoginAuthDto();
         loginAuthDto.setLoginName(principal.getUsername());
 
-//		redisTemplate.opsForValue().set(RedisKeyUtil.getAccessTokenKey(token.getValue()), loginAuthDto, 7200, TimeUnit.SECONDS);
+		redisTemplate.opsForValue().set(RedisKeyUtil.getAccessTokenKey(token.getValue()).toLowerCase(), loginAuthDto, 7200, TimeUnit.SECONDS);
 		log.info("用户【 {} 】记录登录日志", principal.getUsername());
 
 		response.setContentType("application/json;charset=UTF-8");

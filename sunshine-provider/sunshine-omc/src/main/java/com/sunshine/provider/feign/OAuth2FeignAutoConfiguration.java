@@ -8,17 +8,22 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.client.Netty4ClientHttpRequestFactory;
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
 import org.springframework.security.oauth2.common.AuthenticationScheme;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 
 @Configuration
 @EnableConfigurationProperties(Oauth2ClientProperties.class)
 public class OAuth2FeignAutoConfiguration {
+
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
 
 	private final Oauth2ClientProperties oauth2ClientProperties;
 
@@ -56,8 +61,10 @@ public class OAuth2FeignAutoConfiguration {
 	 */
 	@Bean("sunshineOAuth2RestTemplate")
 	public OAuth2RestTemplate oAuth2RestTemplate() {
-		final OAuth2RestTemplate oAuth2RestTemplate = new OAuth2RestTemplate(resourceDetails(), new DefaultOAuth2ClientContext());
+        DefaultOAuth2ClientContext oAuth2ClientContext = new MyDefaultOAuth2ClientContext(redisTemplate);
+		final OAuth2RestTemplate oAuth2RestTemplate = new OAuth2RestTemplate(resourceDetails(), oAuth2ClientContext);
 		oAuth2RestTemplate.setRequestFactory(new Netty4ClientHttpRequestFactory());
+
 		return oAuth2RestTemplate;
 
 	}
