@@ -66,7 +66,6 @@ public class OAuth2FeignAutoConfiguration {
 		oAuth2RestTemplate.setRequestFactory(new Netty4ClientHttpRequestFactory());
 
 		return oAuth2RestTemplate;
-
 	}
 
 	/**
