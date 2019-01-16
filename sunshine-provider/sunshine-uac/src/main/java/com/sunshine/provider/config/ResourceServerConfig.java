@@ -1,6 +1,5 @@
 package com.sunshine.provider.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sunshine.core.config.CustomAccessDeniedHandler;
 import com.sunshine.core.config.CustomHttp403ForbiddenEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import javax.annotation.Resource;
 
 @Configuration
 @EnableResourceServer
@@ -26,8 +24,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Autowired
     private AuthenticationFailureHandler authenticationFailureHandler;
-    @Resource
-    private ObjectMapper objectMapper;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {

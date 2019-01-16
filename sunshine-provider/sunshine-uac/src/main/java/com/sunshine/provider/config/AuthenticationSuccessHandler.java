@@ -1,10 +1,8 @@
 package com.sunshine.provider.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sunshine.base.dto.LoginAuthDto;
 import com.sunshine.provider.model.SecurityUser;
 import com.sunshine.provider.service.UacUserService;
-import com.sunshine.utils.RedisKeyUtil;
 import com.sunshine.utils.RequestUtil;
 import com.sunshine.utils.wrapper.WrapMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -12,8 +10,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAuthenticationException;
 import org.springframework.security.oauth2.provider.ClientDetails;
@@ -31,7 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 @Component("authenticationSuccessHandler")
 @Slf4j
