@@ -18,7 +18,7 @@ public class AuthHeaderFilter extends ZuulFilter {
 
 	private static final String BEARER_TOKEN_TYPE = "bearer ";
 	private static final String OPTIONS = "OPTIONS";
-	private static final String AUTH_PATH = "/auth";
+	private static final String AUTH_PATH = "/oauth";
 	private static final String LOGOUT_URI = "/oauth/token";
 	private static final String ALIPAY_CALL_URI = "/pay/alipayCallback";
 

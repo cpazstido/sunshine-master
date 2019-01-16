@@ -4,7 +4,6 @@ import com.sunshine.core.token.OAuth2ClientProperties;
 import com.sunshine.core.token.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -41,8 +40,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-        oauthServer.tokenKeyAccess("permitAll()");
-        oauthServer.allowFormAuthenticationForClients();
+        oauthServer
+                .tokenKeyAccess("permitAll()")
+                .allowFormAuthenticationForClients()
+        ;
     }
 
     @Override

@@ -33,8 +33,8 @@ sunshine:
       clients[0]:
         clientId: admin
         clientSecret: 123456
-        accessTokenValidateSeconds: 30
-        refreshTokenValiditySeconds: 30
+        accessTokenValidateSeconds: 30000
+        refreshTokenValiditySeconds: 30000
         scope: "*"
 mybatis:
   type-aliases-package: com.sunshine.provider.model.domain
