@@ -9,13 +9,6 @@ import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
-/**
- * The class Base service.
- *
- * @param <T> the type parameter
- *
- * @author paascloud.net@gmail.com
- */
 public abstract class BaseService<T> implements IService<T> {
 
 	/**

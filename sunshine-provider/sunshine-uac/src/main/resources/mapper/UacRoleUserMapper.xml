@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunshine.provider.mapper.UacRoleUserMapper">
+    <resultMap id="BaseResultMap" type="com.sunshine.provider.model.domain.UacRoleUser">
+        <id column="role_id" jdbcType="BIGINT" property="roleId"/>
+        <id column="user_id" jdbcType="BIGINT" property="userId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        role_id, user_id
+    </sql>
+    <sql id="Base_Where_Condition">
+    </sql>
+    <sql id ="Base_Set_Condition">
+    </sql>
+
+
+</mapper>

@@ -3,6 +3,7 @@ package com.sunshine.provider.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sunshine.base.dto.LoginAuthDto;
 import com.sunshine.provider.model.SecurityUser;
+import com.sunshine.provider.service.UacUserService;
 import com.sunshine.utils.RedisKeyUtil;
 import com.sunshine.utils.RequestUtil;
 import com.sunshine.utils.wrapper.WrapMapper;
@@ -44,6 +45,8 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 	private AuthorizationServerTokenServices authorizationServerTokenServices;
 	@Resource
 	private RedisTemplate<String, Object> redisTemplate;
+	@Resource
+	private UacUserService uacUserService;
 
 	private static final String BEARER_TOKEN_TYPE = "Basic ";
 
@@ -80,12 +83,9 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 		OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
 
 		OAuth2AccessToken token = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
-		User principal = (User) authentication.getPrincipal();
+        SecurityUser principal = (SecurityUser) authentication.getPrincipal();
+        uacUserService.handlerLoginData(token, principal, request);
 
-		LoginAuthDto loginAuthDto = new LoginAuthDto();
-		loginAuthDto.setLoginName(principal.getUsername());
-
-//		redisTemplate.opsForValue().set(RedisKeyUtil.getAccessTokenKey(token.getValue()), loginAuthDto, 7200, TimeUnit.SECONDS);
 		log.info("用户【 {} 】记录登录日志", principal.getUsername());
 
 		response.setContentType("application/json;charset=UTF-8");

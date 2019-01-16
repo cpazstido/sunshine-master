@@ -24,6 +24,7 @@
         <mybatis.plus.version>2.0.7</mybatis.plus.version>
         <druid.version>1.0.29</druid.version>
         <mapper.version>3.4.0</mapper.version>
+        <modelmapper.version>1.1.2</modelmapper.version>
     </properties>
 
     <modules>
@@ -168,6 +169,16 @@
                         <groupId>javax.servlet</groupId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>eu.bitwalker</groupId>
+                <artifactId>UserAgentUtils</artifactId>
+                <version>1.20</version>
+            </dependency>
+            <dependency>
+                <groupId>org.modelmapper</groupId>
+                <artifactId>modelmapper</artifactId>
+                <version>${modelmapper.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

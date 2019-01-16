@@ -21,41 +21,37 @@ import java.util.Date;
 public class UserController {
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
-    @Autowired
-    private RedisConnectionFactory redisConnectionFactory;
 
     @Autowired
     private UacUserService userService;
 
     /**
      * 用户信息校验
+     *
      * @param authentication 信息
      * @return 用户信息
      */
     @RequestMapping("/user")
     public Object user(Authentication authentication) {
-        SecurityUser sysUser = new SecurityUser(1L,"admin","","",1L,"");
+        SecurityUser sysUser = new SecurityUser(1L, "admin", "", "", 1L, "");
         return sysUser;
     }
 
     @RequestMapping("/userLogout")
-    public String logout(){
-        RedisTokenStore tokenStore = new RedisTokenStore(redisConnectionFactory);
+    public String logout() {
         String accessToken = ((OAuth2AuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getDetails()).getTokenValue();
-        String refreshToken = tokenStore.readAccessToken(accessToken).getRefreshToken().getValue();
-        tokenStore.removeAccessToken(accessToken);
-        tokenStore.removeRefreshToken(refreshToken);
+        redisTemplate.delete(RedisKeyUtil.getAccessTokenKey(accessToken).toLowerCase());
         return "logout success!";
-//        redisTemplate.delete(RedisKeyUtil.getAccessTokenKey(accessToken));
+
     }
 
     @RequestMapping("/getUser")
-    public UacUser getUser(String name){
+    public UacUser getUser(String name) {
         return userService.findByLoginName(name);
     }
 
     @RequestMapping("/getTime")
-    public Date getTime(){
+    public Date getTime() {
         return new Date();
     }
 }

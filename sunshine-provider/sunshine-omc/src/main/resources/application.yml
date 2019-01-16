@@ -5,6 +5,11 @@ spring:
     name: sunshine-provider-omc
   redis:
     host: 127.0.0.2
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/test?characterEncoding=utf8&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
 eureka:
   client:
     service-url:
@@ -18,6 +23,8 @@ security:
       user-authorization-uri: http://localhost:9000/uac/oauth/authorize
     resource:
       user-info-uri: http://localhost:9000/uac/user
+      jwt:
+        key-uri: http://localhost:9000/uac/oauth/token_key
 sunshine:
   oauth2:
     client:

@@ -19,17 +19,22 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
 security:
   oauth2:
+    jwtSigningKey: sunshine
     resource:
       filter-order: 3
       id: sunshine-resouce-uac
+      jwt:
+        key-uri: http://localhost:9000/uac/oauth/token_key
 sunshine:
   security:
     oauth2:
+      jwtSigningKey: sunshine
       tokenStore: jwt
       clients[0]:
         clientId: admin
         clientSecret: 123456
-        accessTokenValidateSeconds: 7200
+        accessTokenValidateSeconds: 30
+        refreshTokenValiditySeconds: 30
         scope: "*"
 mybatis:
   type-aliases-package: com.sunshine.provider.model.domain

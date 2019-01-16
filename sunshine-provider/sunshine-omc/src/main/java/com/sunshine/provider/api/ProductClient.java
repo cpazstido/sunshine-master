@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @FeignClient("sunshine-provider-pmc")
 public interface ProductClient {
 
-    @RequestMapping("index")
+    @RequestMapping("api/index")
     String index();
 }

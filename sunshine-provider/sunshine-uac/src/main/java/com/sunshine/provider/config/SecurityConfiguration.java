@@ -17,14 +17,14 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    @Override
-    protected UserDetailsService userDetailsService(){
-        String finalPassword = "123456";
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("admin").password(finalPassword).authorities("admin").build());
-        return manager;
-    }
+//    @Bean
+//    @Override
+//    protected UserDetailsService userDetailsService(){
+//        String finalPassword = "123456";
+//        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+//        manager.createUser(User.withUsername("admin").password(finalPassword).authorities("admin").build());
+//        return manager;
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

@@ -1,9 +1,11 @@
 package com.sunshine.core.interceptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sunshine.base.constants.GlobalConstant;
 import com.sunshine.base.dto.LoginAuthDto;
 import com.sunshine.base.dto.UserTokenDto;
 import com.sunshine.utils.RedisKeyUtil;
+import com.sunshine.utils.ThreadLocalMap;
 import com.sunshine.utils.wrapper.WrapMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -83,20 +85,29 @@ public class TokenInterceptor implements HandlerInterceptor {
             log.info("<== preHandle - 配置URL不走认证.  url={}", uri);
             return true;
         }
+
+        if (OPTIONS.equalsIgnoreCase(request.getMethod())) {
+            log.info("<== preHandle - OPTIONS不走认证.  url={}", uri);
+            return true;
+        }
+
         String token = StringUtils.substringAfter(request.getHeader(HttpHeaders.AUTHORIZATION).toLowerCase(), "bearer ");
+        log.info("<== preHandle - 权限拦截器.  token={}", token);
         if(StringUtils.isEmpty(token)){
             token = request.getParameter("access_token");
         }
         log.info("<== preHandle - 权限拦截器.  token={}", token);
-        RedisTokenStore tokenStore = new RedisTokenStore(redisConnectionFactory);
-        OAuth2AccessToken auth2AccessToken = tokenStore.readAccessToken(token);
-//        LoginAuthDto loginUser = (LoginAuthDto) redisTemplate.opsForValue().get(RedisKeyUtil.getAccessTokenKey(token));
-        if (auth2AccessToken == null) {
+        LoginAuthDto loginUser = (UserTokenDto) redisTemplate.opsForValue().get(RedisKeyUtil.getAccessTokenKey(token).toLowerCase());
+        if (loginUser == null) {
             log.error("获取用户信息失败, 不允许操作");
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write((objectMapper.writeValueAsString(WrapMapper.unAuthorized("无效token:"+token))));
             return false;
         }
+
+        log.info("<== preHandle - 权限拦截器.  loginUser={}", loginUser);
+        ThreadLocalMap.put(GlobalConstant.Sys.TOKEN_AUTH_DTO, loginUser);
+        log.info("<== preHandle - 权限拦截器.  url={}, loginUser={}", uri, loginUser);
         return true;
     }
 
