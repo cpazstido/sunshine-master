@@ -31,8 +31,8 @@ sunshine:
       jwtSigningKey: sunshine
       tokenStore: jwt
       clients[0]:
-        clientId: admin
-        clientSecret: 123456
+        clientId: sofmit_client
+        clientSecret: sofmit_secret
         accessTokenValidateSeconds: 30000
         refreshTokenValiditySeconds: 30000
         scope: "*"

@@ -53,9 +53,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         int refreshTokenValiditySeconds = oAuth2Clients[0].getRefreshTokenValiditySeconds();
         clients
                 .inMemory()
-                .withClient("admin")
+                .withClient("sofmit_client")
                 .authorizedGrantTypes("password", "refresh_token","client_credentials")
-                .secret("123456")
+                .secret("sofmit_secret")
                 .accessTokenValiditySeconds(accessTokenValidateSeconds)
                 .refreshTokenValiditySeconds(refreshTokenValiditySeconds)
                 .scopes("select")
