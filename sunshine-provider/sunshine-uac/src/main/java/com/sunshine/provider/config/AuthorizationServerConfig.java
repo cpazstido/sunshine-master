@@ -53,7 +53,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         int refreshTokenValiditySeconds = oAuth2Clients[0].getRefreshTokenValiditySeconds();
         clients
                 .inMemory()
-                .withClient("sofmit_client")
+                .withClient("sofmit-client")
                 .authorizedGrantTypes("password", "refresh_token","client_credentials")
                 .secret("sofmit_secret")
                 .accessTokenValiditySeconds(accessTokenValidateSeconds)

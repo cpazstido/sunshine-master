@@ -1,4 +1,4 @@
-package com.sunshine.provider.config;
+package com.sunshine.core.config;
 
 
 import org.springframework.security.core.AuthenticationException;

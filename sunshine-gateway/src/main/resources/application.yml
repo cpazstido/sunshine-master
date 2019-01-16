@@ -24,7 +24,7 @@ zuul:
 security:
   oauth2:
     client:
-      clientId: sofmit_client
+      clientId: sofmit-client
       clientSecret: sofmit_secret
       access-token-uri: http://localhost:9000/uac/oauth/token
       user-authorization-uri: http://localhost:9000/uac/oauth/authorize

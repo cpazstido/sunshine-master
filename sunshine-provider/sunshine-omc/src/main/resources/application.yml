@@ -17,7 +17,7 @@ eureka:
 security:
   oauth2:
     client:
-      clientId: sofmit_client
+      clientId: sofmit-client
       clientSecret: sofmit_secret
       access-token-uri: http://localhost:9000/uac/oauth/token
       user-authorization-uri: http://localhost:9000/uac/oauth/authorize
@@ -30,7 +30,7 @@ sunshine:
     client:
       id: sunshine-resouce-uac
       accessTokenUrl: http://localhost:9000/uac/oauth/token
-      clientId: sofmit_client
+      clientId: sofmit-client
       clientSecret: sofmit_secret
       clientAuthenticationScheme: header
       scope: select

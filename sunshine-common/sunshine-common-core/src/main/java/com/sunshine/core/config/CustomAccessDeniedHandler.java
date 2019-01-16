@@ -1,6 +1,6 @@
-package com.sunshine.provider.config;
+package com.sunshine.core.config;
 
-import com.sunshine.provider.utils.HTTPUtils;
+import com.sunshine.utils.HTTPUtils;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
