@@ -125,7 +125,8 @@
         <include refid="Base_Column_List">
             <property name="alias" value="a"></property>
         </include>
-        from uac_role_action ra INNER JOIN uac_role r on ra.role_id = r.id
+        from uac_role_action ra
+        INNER JOIN uac_role r on ra.role_id = r.id
         INNER JOIN uac_role_user ru on ru.role_id = r.id
         INNER JOIN uac_user u on ru.user_id = u.id
         INNER JOIN uac_action a on ra.action_id = a.id

@@ -1,0 +1,14 @@
+server:
+  port: 9010
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+spring:
+  application:
+    name: @pom.artifactId@
+  profiles:
+    active: dev
+management:
+  security:
+    enabled: false

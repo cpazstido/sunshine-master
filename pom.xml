@@ -32,6 +32,7 @@
         <module>sunshine-gateway</module>
         <module>sunshine-provider</module>
         <module>sunshine-common</module>
+        <module>sunshine-config</module>
     </modules>
 
     <dependencies>

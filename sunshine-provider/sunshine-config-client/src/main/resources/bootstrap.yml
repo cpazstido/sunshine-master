@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    config:
+      fail-fast: true
+      discovery:
+        service-id: sunshine-config
+        enabled: true
+      label: master
+      profile: ${spring.profiles.active}
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
