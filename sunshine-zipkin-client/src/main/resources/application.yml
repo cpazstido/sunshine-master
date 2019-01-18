@@ -1,0 +1,18 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: @pom.artifactId@
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  zipkin:
+    sender:
+      type: rabbit
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

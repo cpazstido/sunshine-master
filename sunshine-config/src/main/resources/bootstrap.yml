@@ -7,5 +7,5 @@ spring:
           username:
           password:
           search-paths: /*
-          default-label: ${spring.profiles.active}
+          default-label: master
           basedir: git-config

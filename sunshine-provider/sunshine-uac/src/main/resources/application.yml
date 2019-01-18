@@ -13,6 +13,12 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
+  zipkin:
+    sender:
+      type: rabbit
+  sleuth:
+    sampler:
+      percentage: 1.0
 eureka:
   client:
     service-url:
@@ -46,3 +52,6 @@ mapper:
   mappers: com.sunshine.core.mybatis.MyMapper
   not-empty: false
   identity: MYSQL
+management:
+  security:
+    enabled: false

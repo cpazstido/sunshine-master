@@ -12,11 +12,21 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
   profiles:
     active: dev
+  zipkin:
+    base-url: http://localhost:9040
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
 server:
   port: 9011
-management:
-  security:
-    enabled: false
+#management:
+#  security:
+#    enabled: false
 security:
   basic:
-    enabled: false
+    enabled: true
+  user:
+      password: root
+      name: root

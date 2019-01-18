@@ -38,7 +38,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/user/*")
                 .authenticated()
-                .antMatchers("/oauth/**","/logout").permitAll()
+                .antMatchers("/oauth/**","/logout","/health/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(customHttp403ForbiddenEntryPoint)

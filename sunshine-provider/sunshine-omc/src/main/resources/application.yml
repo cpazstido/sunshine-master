@@ -2,7 +2,7 @@ server:
   port: 9002
 spring:
   application:
-    name: sunshine-provider-omc
+    name: @pom.artifactId@
   redis:
     host: 127.0.0.2
   datasource:
@@ -10,6 +10,12 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
+  zipkin:
+    sender:
+      type: rabbit
+  sleuth:
+    sampler:
+      percentage: 1.0
 eureka:
   client:
     service-url:
@@ -36,3 +42,6 @@ sunshine:
       scope: select
     resource:
       user-info-uri: http://localhost:9000/uac/user
+management:
+  security:
+    enabled: false
