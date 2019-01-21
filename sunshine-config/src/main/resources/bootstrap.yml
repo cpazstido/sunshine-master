@@ -3,9 +3,13 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/cpazstido/config-test.git
+          uri: https://github.com/cpazstido/sunshine-config.git
           username:
           password:
           search-paths: /*
-          default-label: master
+          default-label: ${spring.profiles.active}
           basedir: git-config
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

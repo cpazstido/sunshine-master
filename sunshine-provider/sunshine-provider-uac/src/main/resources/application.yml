@@ -1,0 +1,12 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: @pom.artifactId@
+  redis:
+    host: 127.0.0.1
+  datasource:
+    username: root
+    password: root
+  profiles:
+    active: dev
