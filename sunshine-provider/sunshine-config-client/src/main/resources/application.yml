@@ -17,9 +17,6 @@ spring:
     password: guest
 server:
   port: 9011
-#management:
-#  security:
-#    enabled: false
 security:
   user:
     password: root

@@ -8,26 +8,7 @@ spring:
   application:
     name: @pom.artifactId@
   datasource:
-#    url: jdbc:mysql://127.0.0.1:3306/test?characterEncoding=utf8&useSSL=false
     username: root
     password: root
   profiles:
     active: dev
-#    driver-class-name: com.mysql.jdbc.Driver
-#  zipkin:
-#    locator:
-#      discovery:
-#        enabled: false
-#zipkin:
-#  collector:
-#    rabbitmq:
-#      addresses: 127.0.0.1:5672
-#      username: guest
-#      password: guest
-#      queue: zipkin
-#  storage:
-#    type: mysql
-#
-#management:
-#  security:
-#    enabled: false
