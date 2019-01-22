@@ -1,0 +1,41 @@
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka/
+#  instance:
+#    instance-id: ${spring.application.name}:${spring.cloud.client.ipAddress}:${server.port}
+#zuul:
+#  routes:
+#    uac-route:
+#      path: /uac/**
+#      sensitiveHeaders:
+#      service-id: sunshine-provider-uac
+#    omc-route:
+#      path: /omc/**
+#      service-id: sunshine-provider-omc
+#    pmc-route:
+#      path: /pmc/**
+#      service-id: sunshine-provider-pmc
+#  ratelimit:
+#    enabled: true
+#    key-prefix: sunshine
+#    repository: redis
+#    default-policy:
+#      type: origin
+#      limit: 20
+#      quota: 1000
+#      refresh-interval: 2
+#    behind-proxy: false
+#
+#security:
+#  oauth2:
+#    client:
+#      clientId: sofmit-client
+#      clientSecret: sofmit_secret
+#      access-token-uri: http://localhost:9000/uac/oauth/token
+#      user-authorization-uri: http://localhost:9000/uac/oauth/authorize
+#    resource:
+#      user-info-uri: http://localhost:9000/uac/user
+#management:
+#  security:
+#    enabled: false
