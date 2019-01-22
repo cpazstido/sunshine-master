@@ -83,6 +83,7 @@ public class LoginRateLimiterFilter extends ZuulFilter {
                 res.setHeader("Access-Control-Allow-Credentials", "true");
                 res.setContentType("application/json");
                 res.setCharacterEncoding("UTF-8");
+                res.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
                 res.getWriter().write("{\"code\":429 ,\"message\" :\"request too often!\"}");
                 res.flushBuffer();
 
