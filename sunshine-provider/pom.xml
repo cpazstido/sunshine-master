@@ -14,7 +14,6 @@
         <module>sunshine-provider-uac</module>
         <module>sunshine-provider-omc</module>
         <module>sunshine-provider-pmc</module>
-        <module>sunshine-config-client</module>
     </modules>
     <artifactId>sunshine-provider</artifactId>
 

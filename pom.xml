@@ -36,7 +36,6 @@
         <module>sunshine-config</module>
         <module>sunshine-admin</module>
         <module>sunshine-zipkin</module>
-        <module>sunshine-zipkin-client</module>
     </modules>
 
     <dependencies>
