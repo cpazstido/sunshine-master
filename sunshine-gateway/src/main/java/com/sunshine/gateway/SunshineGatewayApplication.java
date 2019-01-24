@@ -10,6 +10,7 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
 @EnableZuulProxy
 @EnableEurekaClient
+@EnableHystrix
 @SpringBootApplication
 public class SunshineGatewayApplication {
 

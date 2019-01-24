@@ -5,7 +5,17 @@ spring:
     name: @pom.artifactId@
   profiles:
     active: dev
+  boot:
+    admin:
+      context-path: /admin
 security:
   user:
     password: admin
     name: admin
+  basic:
+    enabled: false
+turbine:
+  aggregator:
+    clusterConfig: default
+  appConfig: SUNSHINE-GATEWAY,SUNSHINE-PROVIDER-OMC,SUNSHINE-PROVIDER-PMC,SUNSHINE-PROVIDER-UAC
+  clusterNameExpression: new String("default")
