@@ -8,3 +8,25 @@ spring:
     password: root
   profiles:
     active: dev
+#hystrix:
+#  threadpool:
+#    sunshine-provider-pmc:
+#      coreSize: 2
+#      maxQueueSize: 1
+#      queueSizeRejectionThreshold: 1
+hystrix:
+  command:
+    default:
+      metrics:
+        rollingStats:
+          timeInMilliseconds: 1000
+      circuitBreaker:
+        sleepWindowInMilliseconds: 1000
+  threadpool:
+    sunshine-provider-pmc: #default 若为default，则对所有的服务有效
+      coreSize: 2
+      maxQueueSize: 1
+      queueSizeRejectionThreshold: 1
+security:
+  basic:
+    enabled: false

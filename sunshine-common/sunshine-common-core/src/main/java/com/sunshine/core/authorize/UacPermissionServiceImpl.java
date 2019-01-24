@@ -23,7 +23,7 @@ public class UacPermissionServiceImpl implements UacPermissionService {
 		String currentLoginName = SecurityUtils.getCurrentLoginName();
 		Set<String> currentAuthorityUrl = SecurityUtils.getCurrentAuthorityUrl();
 		String requestURI = request.getRequestURI();
-		log.info("验证权限loginName={}, requestURI={}, hasAuthorityUrl={}", currentLoginName, requestURI, Joiner.on(GlobalConstant.Symbol.COMMA).join(currentAuthorityUrl));
+//		log.info("验证权限loginName={}, requestURI={}, hasAuthorityUrl={}", currentLoginName, requestURI, Joiner.on(GlobalConstant.Symbol.COMMA).join(currentAuthorityUrl));
 		// 超级管理员 全部都可以访问
 		if (StringUtils.equals(currentLoginName, GlobalConstant.Sys.SUPER_MANAGER_LOGIN_NAME)) {
 			return true;

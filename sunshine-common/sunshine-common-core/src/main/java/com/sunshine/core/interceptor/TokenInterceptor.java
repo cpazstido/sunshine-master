@@ -1,6 +1,7 @@
 package com.sunshine.core.interceptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netflix.ribbon.proxy.annotation.Hystrix;
 import com.sunshine.base.constants.GlobalConstant;
 import com.sunshine.base.dto.LoginAuthDto;
 import com.sunshine.base.dto.UserTokenDto;
@@ -36,6 +37,7 @@ public class TokenInterceptor implements HandlerInterceptor {
     private static final String AUTH_PATH2 = "/oauth";
     private static final String AUTH_PATH3 = "/error";
     private static final String AUTH_PATH4 = "/api";
+    private static final String HYSTRIX = "/hystrix";
 
     /**
      * After completion.
@@ -77,34 +79,40 @@ public class TokenInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String uri = request.getRequestURI();
-        log.info("<== preHandle - 权限拦截器.  url={}", uri);
-        if (uri.contains(USER) || uri.contains(AUTH_PATH1) || uri.contains(AUTH_PATH2) || uri.contains(AUTH_PATH3) || uri.contains(AUTH_PATH4)) {
-            log.info("<== preHandle - 配置URL不走认证.  url={}", uri);
+//        log.info("<== preHandle - 权限拦截器.  url={}", uri);
+        if (uri.contains(USER)
+                || uri.contains(AUTH_PATH1)
+                || uri.contains(AUTH_PATH2)
+                || uri.contains(AUTH_PATH3)
+                || uri.contains(AUTH_PATH4)
+                || uri.contains(HYSTRIX)
+        ) {
+//            log.info("<== preHandle - 配置URL不走认证.  url={}", uri);
             return true;
         }
 
         if (OPTIONS.equalsIgnoreCase(request.getMethod())) {
-            log.info("<== preHandle - OPTIONS不走认证.  url={}", uri);
+//            log.info("<== preHandle - OPTIONS不走认证.  url={}", uri);
             return true;
         }
 
         String token = StringUtils.substringAfter(request.getHeader(HttpHeaders.AUTHORIZATION).toLowerCase(), "bearer ");
-        log.info("<== preHandle - 权限拦截器.  token={}", token);
-        if(StringUtils.isEmpty(token)){
+//        log.info("<== preHandle - 权限拦截器.  token={}", token);
+        if (StringUtils.isEmpty(token)) {
             token = request.getParameter("access_token");
         }
-        log.info("<== preHandle - 权限拦截器.  token={}", token);
+//        log.info("<== preHandle - 权限拦截器.  token={}", token);
         LoginAuthDto loginUser = (UserTokenDto) redisTemplate.opsForValue().get(RedisKeyUtil.getAccessTokenKey(token).toLowerCase());
         if (loginUser == null) {
             log.error("获取用户信息失败, 不允许操作");
             response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write((objectMapper.writeValueAsString(WrapMapper.unAuthorized("无效token:"+token))));
+            response.getWriter().write((objectMapper.writeValueAsString(WrapMapper.unAuthorized("无效token:" + token))));
             return false;
         }
 
-        log.info("<== preHandle - 权限拦截器.  loginUser={}", loginUser);
+//        log.info("<== preHandle - 权限拦截器.  loginUser={}", loginUser);
         ThreadLocalMap.put(GlobalConstant.Sys.TOKEN_AUTH_DTO, loginUser);
-        log.info("<== preHandle - 权限拦截器.  url={}, loginUser={}", uri, loginUser);
+//        log.info("<== preHandle - 权限拦截器.  url={}, loginUser={}", uri, loginUser);
         return true;
     }
 

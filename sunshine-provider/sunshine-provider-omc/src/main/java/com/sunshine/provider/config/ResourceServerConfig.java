@@ -49,7 +49,19 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 				.exceptionHandling()
 				.authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
 				.and()
-				.authorizeRequests().antMatchers("/pay/alipayCallback", "/druid/**", "/swagger-ui.html", "/swagger-resources/**", "/v2/api-docs", "/api/applications").permitAll()
+				.authorizeRequests().antMatchers(
+				        "/pay/alipayCallback"
+                                    , "/druid/**"
+                                    , "/swagger-ui.html"
+                                    , "/swagger-resources/**"
+                                    , "/v2/api-docs"
+                                    , "/api/applications"
+                                    ,"/hystrix/**"
+                                    ,"/hystrix.stream"
+                                    ,"/webjars/**"
+                                    ,"/hystrix/**"
+                                    ,"/proxy.stream"
+                ).permitAll()
 				.anyRequest()
 				.authenticated()
 				.and()

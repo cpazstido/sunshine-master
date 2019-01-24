@@ -5,6 +5,9 @@
 #  instance:
 #    instance-id: ${spring.application.name}:${spring.cloud.client.ipAddress}:${server.port}
 #zuul:
+#  host:
+#    socket-timeout-millis: 60000
+#    connect-timeout-millis: 60000
 #  routes:
 #    uac-route:
 #      path: /uac/**
@@ -13,9 +16,25 @@
 #    omc-route:
 #      path: /omc/**
 #      service-id: sunshine-provider-omc
+#      ribbon:
+#        eager-load:
+#          enabled: true
+#        MaxAutoRetries: 1
+#        MaxAutoRetriesNextServer: 2
+#        OkToRetryOnAllOperations: false
+#        ConnectTimeout: 10000
+#        ReadTimeout: 10000
 #    pmc-route:
 #      path: /pmc/**
 #      service-id: sunshine-provider-pmc
+#      ribbon:
+#        eager-load:
+#          enabled: true
+#        MaxAutoRetries: 1
+#        MaxAutoRetriesNextServer: 2
+#        OkToRetryOnAllOperations: false
+#        ConnectTimeout: 10000
+#        ReadTimeout: 10000
 #  ratelimit:
 #    enabled: true
 #    key-prefix: sunshine
