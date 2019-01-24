@@ -12,8 +12,6 @@ security:
   user:
     password: admin
     name: admin
-  basic:
-    enabled: false
 turbine:
   aggregator:
     clusterConfig: default

@@ -8,3 +8,6 @@ spring:
     password: root
   profiles:
     active: dev
+#management:
+#  security:
+#    enabled: true
